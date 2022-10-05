@@ -1,8 +1,29 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from '@emotion/styled';
 
-export const Reset: FC = () => {
-  return <button>{'😮' + '😊'}</button>;
+export interface ResetProps {
+  /**
+   * Reset action handler
+   */
+  onReset: () => void;
+}
+
+export const Reset: FC<ResetProps> = ({ onReset }) => {
+  const [mouseDown, setMouseDown] = useState(false);
+
+  const onMouseDown = () => setMouseDown(true);
+  const onMouseUp = () => setMouseDown(false);
+
+  return (
+    <Button
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+      onClick={onReset}
+    >
+      {mouseDown ? '😮' : '😊'}
+    </Button>
+  );
 };
 
 const Button = styled.button`
